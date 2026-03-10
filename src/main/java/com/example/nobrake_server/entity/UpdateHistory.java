@@ -1,9 +1,7 @@
 package com.example.nobrake_server.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,6 +10,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UpdateHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,4 +31,13 @@ public class UpdateHistory {
     private LocalDateTime updateDate; // Sig_UpdateDate 매핑
 
     private String failureReason; // Sig_RejectReason 매핑
+
+    public static UpdateHistory createHistory(VehicleEcu ecuVehicle, Firmware firmware) {
+        return UpdateHistory.builder()
+                .ecuVehicle(ecuVehicle)
+                .firmware(firmware)
+                .status(UpdateStatus.DOWNLOADING)
+                .updateDate(LocalDateTime.now())
+                .build();
+    }
 }

@@ -43,11 +43,18 @@ public class AdminService {
         vehicleEcuRepository.save(mapping);
 
         // 5. 시연용 타겟 펌웨어 등록 (Version: 200)
-        long fileSize = 524288L; // 512KB 설정
-        byte[] dummyBinary = new byte[(int) fileSize];
+        long fileSize1 = 524288L; // 512KB 설정
+        byte[] dummyBinary1 = new byte[(int) fileSize1];
 
-        new java.util.Random().nextBytes(dummyBinary);
-        Firmware firmware = Firmware.createFirmware(rightECU, 2,fileSize, dummyBinary);
-        firmwareRepository.save(firmware);
+        new java.util.Random().nextBytes(dummyBinary1);
+        Firmware firmware1 = Firmware.createFirmware(rightECU, 1,fileSize1, dummyBinary1);
+        firmwareRepository.save(firmware1);
+
+        long fileSize2 = 524288L; // 512KB 설정
+        byte[] dummyBinary2 = new byte[(int) fileSize2];
+
+        new java.util.Random().nextBytes(dummyBinary2);
+        Firmware firmware2 = Firmware.createFirmware(rightECU, 2,fileSize2, dummyBinary2);
+        firmwareRepository.save(firmware2);
     }
 }
