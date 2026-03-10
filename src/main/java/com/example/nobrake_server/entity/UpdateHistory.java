@@ -40,4 +40,16 @@ public class UpdateHistory {
                 .updateDate(LocalDateTime.now())
                 .build();
     }
+
+    public void updateStatus(UpdateStatus status){
+        this.status = status;
+    }
+
+    public void updateFailureReason(String failureReason){
+        this.failureReason = failureReason;
+    }
+
+    public void updateUpdateDate(LocalDateTime updateDate){
+        this.updateDate = updateDate;
+    }
 }
