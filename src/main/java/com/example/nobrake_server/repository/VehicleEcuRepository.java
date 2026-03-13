@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface VehicleEcuRepository extends JpaRepository<VehicleEcu, UUID> {
-    Optional<VehicleEcu> findByVehicle_IdAndEcu_Id(UUID vehicle_id, UUID ecu_id);
+    Optional<VehicleEcu> findByVehicle_VinAndEcu_TargetEcuId(String vin, Integer targetEcuId);
 }
