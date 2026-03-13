@@ -31,30 +31,32 @@ public class AdminService {
         ecuRepository.deleteAll();
 
         // 2. 차량 등록 (Sig_VehicleID: 1234)
-        Vehicle vehicle = Vehicle.createVehicle();
+        Vehicle vehicle = Vehicle.createVehicle("KMHCN51C6RU123456", "IONIQ5");
         vehicleRepository.save(vehicle);
 
         // 3. ECU 등록 (Engine, Brake)
-        Ecu rightECU = Ecu.createEcu();
+        Ecu rightECU = Ecu.createEcu(52, "92190-L1000");
         ecuRepository.save(rightECU);
 
         // 4. 차량-ECU 매핑 (EcuVehicle)
         VehicleEcu mapping = VehicleEcu.of(vehicle, rightECU);
         vehicleEcuRepository.save(mapping);
 
-        // 5. 시연용 타겟 펌웨어 등록 (Version: 200)
-        long fileSize1 = 524288L; // 512KB 설정
+        // 5. 시연용 타겟 펌웨어 등록 (10KB로 축소)
+        long fileSize1 = 10240L; // 10KB 설정
         byte[] dummyBinary1 = new byte[(int) fileSize1];
-
         new java.util.Random().nextBytes(dummyBinary1);
-        Firmware firmware1 = Firmware.createFirmware(rightECU, 1,fileSize1, dummyBinary1);
+
+        // 버전 1 등록
+        Firmware firmware1 = Firmware.createFirmware(rightECU, 1, fileSize1, dummyBinary1);
         firmwareRepository.save(firmware1);
 
-        long fileSize2 = 524288L; // 512KB 설정
+        // 버전 2 등록
+        long fileSize2 = 10240L;
         byte[] dummyBinary2 = new byte[(int) fileSize2];
-
         new java.util.Random().nextBytes(dummyBinary2);
-        Firmware firmware2 = Firmware.createFirmware(rightECU, 2,fileSize2, dummyBinary2);
+
+        Firmware firmware2 = Firmware.createFirmware(rightECU, 2, fileSize2, dummyBinary2);
         firmwareRepository.save(firmware2);
     }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FirmwareRepository extends JpaRepository<Firmware, UUID> {
-    Optional<Firmware> findByEcu_IdAndVersion(UUID ecu_id, Integer version);
+    Optional<Firmware> findByEcu_TargetEcuIdAndVersion(Integer targetEcuId, Integer version);
 }

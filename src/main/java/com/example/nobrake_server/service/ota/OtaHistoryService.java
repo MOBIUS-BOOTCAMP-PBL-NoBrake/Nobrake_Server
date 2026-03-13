@@ -26,12 +26,12 @@ public class OtaHistoryService {
     @Transactional
     public UUID saveUpdateLog(UpdateHistoryRequest req) {
         // 1. 차량-ECU 매핑 정보 조회
-        VehicleEcu mapping = vehicleEcuRepository.findByVehicle_IdAndEcu_Id(UUID.fromString(req.getVehicleId()), UUID.fromString(req.getTargetEcuId()))
-                .orElseThrow(() -> new RuntimeException("Mapping not found for Vehicle and ECU"));
+        VehicleEcu mapping = vehicleEcuRepository.findByVehicle_VinAndEcu_TargetEcuId(req.getVehicleVIN(), req.getTargetEcuId())
+                .orElseThrow(() -> new RuntimeException("잘못된 차량-ECU 매핑 정보입니다."));
 
         // 2. 해당 버전의 펌웨어 정보 조회 (이력 연결용)
-        Firmware firmware = firmwareRepository.findByEcu_IdAndVersion(UUID.fromString(req.getTargetEcuId()), req.getSwVersion())
-                .orElseThrow(() -> new RuntimeException("Firmware version not found"));
+        Firmware firmware = firmwareRepository.findByEcu_TargetEcuIdAndVersion(req.getTargetEcuId(), req.getSwVersion())
+                .orElseThrow(() -> new RuntimeException("해당 펌웨어 버전을 찾을 수 없습니다."));
 
         // 3. UpdateHistory 엔티티 생성 및 저장 (Builder 활용)
         UpdateHistory history = historyRepository.findFirstByEcuVehicleAndFirmware_VersionAndStatusOrderByUpdateDateDesc(
