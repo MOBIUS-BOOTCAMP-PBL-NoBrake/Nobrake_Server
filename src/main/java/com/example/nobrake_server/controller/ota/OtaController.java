@@ -18,6 +18,8 @@ public class OtaController {
 
     @PostMapping("/history")
     public ResponseEntity<?> saveHistory(@RequestBody UpdateHistoryRequest request) {
+        System.out.println("ecu ID : " + request.getTargetEcuId());
+
         UUID historyId = otaHistoryService.saveUpdateLog(request);
         return ResponseEntity.ok(Map.of(
                 "status", "SUCCESS",

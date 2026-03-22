@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface UpdateHistoryRepository extends JpaRepository<UpdateHistory, UUID> {
 
     Optional<UpdateHistory> findFirstByEcuVehicleAndFirmware_VersionAndStatusOrderByUpdateDateDesc(VehicleEcu mapping, Integer swVersion, UpdateStatus updateStatus);
+    Optional<UpdateHistory> findFirstByEcuVehicleAndStatusOrderByUpdateDateDesc(VehicleEcu ecuVehicle, UpdateStatus status);
+
 }
